@@ -1,0 +1,71 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #0a0f24; /* Navy Blue Background */
+    color: white;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    animation: fadeIn 2s ease-in-out;
+}
+
+p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+button {
+    background-color: #40E0D0; /* Turquoise Buttons */
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    color: black;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.1);
+    background-color: #32c7b5; /* Slightly darker turquoise on hover */
+}
+
+#video-container {
+    margin-top: 20px;
+}
+
+#video-feed {
+    width: 640px;  /* Keeping the original aspect ratio */
+    height: 480px;
+    border-radius: 10px;
+    border: 3px solid #40E0D0; /* Turquoise Border */
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#description-box {
+    background-color: rgba(4, 25, 55, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 20px auto;
+    display: none;
+}
