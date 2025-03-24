@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Object Detection</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <h1>Live Object Detection</h1>
+        <p>Experience real-time object detection powered by YOLO and OpenCV.</p>
+    </header>
+
+    <div class="button-container">
+        <button id="start-btn">Try it for Yourself</button>
+        <button id="know-more-btn">Know More About What Went Behind Building It?</button>
+    </div>
+
+    <div id="description-box" class="hidden">
+        <p>This project is built using FastAPI, OpenCV, and YOLO for real-time object detection. 
+           The backend is powered by Python, handling live video streaming and AI-based detection models.</p>
+    </div>
+
+    <div id="video-container" class="hidden">
+        <p>Live Object Detection Feed:</p>
+        <img id="video-feed" src="" alt="Video Feed">
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
