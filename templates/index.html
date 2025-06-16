@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Object Detection with FastAPI</title>
+    <style>
+        body {
+            background-color: #1a1a2e;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .video-box {
+            border: 5px solid turquoise;
+            width: 80%;
+            margin: auto;
+        }
+        .video-box img {
+            width: 100%;
+        }
+        .controls {
+            text-align: center;
+            margin-top: 15px;
+        }
+        button {
+            background-color: #16a085;
+            border: none;
+            padding: 10px 18px;
+            margin: 8px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+        button:hover {
+            background-color: #1abc9c;
+        }
+        .stats-box {
+            margin-top: 20px;
+            background-color: #2c3e50;
+            padding: 10px;
+            border-radius: 10px;
+            width: 50%;
+            margin: 20px auto;
+        }
+        .stats-box p {
+            font-size: 18px;
+        }
+        #outputImage {
+            display: block;
+            margin: 20px auto;
+            max-width: 60%;
+            border: 3px solid #16a085;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Object Detection with FastAPI</h1>
+
+    <div class="video-box">
+        <img id="videoFeed" src="/video_feed" alt="Live Video Feed"/>
+    </div>
+
+    <div class="controls">
+        <button onclick="startCamera()">Start Camera</button>
+        <button onclick="stopCamera()">Stop Camera</button>
+        <button onclick="startRecording()">Start Recording</button>
+        <button onclick="stopRecording()">Stop Recording</button>
+        <button onclick="uploadImage()">Upload Image</button>
+        <button onclick="downloadRecording()">Download Video</button>
+    </div>
+
+    <img id="outputImage" src="" alt="Detected Image Result"/>
+
+    <div class="stats-box">
+        <h3>Object Detection Stats</h3>
+        <p id="totalObjects">Total Objects Detected: 0</p>
+        <p id="confidence">Confidence Over Time: 0%</p>
+        <p id="frameRate">Frame Rate (FPS): 0</p>
+        <p id="detectionTime">Detection Time: 0 ms</p>
+    </div>
+</div>
+
+<script>
+    function startCamera() {
+        fetch("/start_camera", { method: "POST" });
+    }
+
+    function stopCamera() {
+        fetch("/stop_camera", { method: "POST" });
+    }
+
+    function startRecording() {
+        fetch("/start_record", { method: "POST" })
+            .then(res => res.json()).then(data => alert(data.status));
+    }
+
+    function stopRecording() {
+        fetch("/stop_record", { method: "POST" })
+            .then(res => res.json()).then(data => alert(data.status));
+    }
+
+    function uploadImage() {
+        let input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = event => {
+            const file = event.target.files[0];
+            const formData = new FormData();
+            formData.append("file", file);
+            fetch("/upload/", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const imageUrl = URL.createObjectURL(blob);
+                document.getElementById("outputImage").src = imageUrl;
+            });
+        };
+        input.click();
+    }
+
+    function downloadRecording() {
+        window.open("/download_recording", "_blank");
+    }
+
+    function updateStats() {
+        fetch("/stats/")
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('totalObjects').innerText = `Total Objects Detected: ${data.total}`;
+                document.getElementById('confidence').innerText = `Confidence Over Time: ${data.confidence}%`;
+                document.getElementById('frameRate').innerText = `Frame Rate (FPS): ${data.fps}`;
+                document.getElementById('detectionTime').innerText = `Detection Time: ${data.time} ms`;
+            });
+    }
+
+    setInterval(updateStats, 1000);
+</script>
+</body>
+</html>
