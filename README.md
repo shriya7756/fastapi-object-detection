@@ -25,7 +25,9 @@ This project brings together the speed of FastAPI and the accuracy of YOLOv3 to 
 ✅ Modern Frontend — Custom-designed HTML/CSS interface (no templates copied off the internet).
 
 ✅ Thread-safe Metrics — Uses threading locks to ensure stable stats across frames.
+
 🔧 Tech Stack
+
 Backend: FastAPI + Python + OpenCV
 
 Frontend: Custom HTML5 + CSS3 + JS
